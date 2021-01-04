@@ -1,0 +1,45 @@
+﻿@page "/testinject"
+
+@using BlazorLearnApp.Services
+@using BlazorLearnApp.Models
+
+@inject IMyService MyService 
+
+<h3>Test Inject - delicious Restaurants</h3>
+
+
+@if (restaurants == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>City</th>
+                <th>State</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var restaurant in restaurants)
+            {
+                <tr>
+                    <td>@restaurant.Name</td>
+                    <td>@restaurant.City</td>
+                    <td>@restaurant.State</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Restaurant[] restaurants;
+
+    protected override async Task OnInitializedAsync()
+    {
+        restaurants = MyService.GetRestaurants();
+    }
+}
