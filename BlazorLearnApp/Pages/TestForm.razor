@@ -1,0 +1,49 @@
+﻿@page "/testform"
+
+@using System.Diagnostics
+@using BlazorLearnApp.Models
+
+<h3>TestForm - for restaurant</h3>
+
+<EditForm Model="@restaurant" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <dl>
+        <dt>Restaurant name</dt>
+        <dd>
+            <InputText id="name" @bind-Value="restaurant.Name" placeholder="input restaurant name: ex. my stake house" />
+        </dd>
+        <dt>City name</dt>
+        <dd>
+            <InputText id="city" @bind-Value="restaurant.City" />
+        </dd>
+        <dt>State name</dt>
+        <dd>
+            <InputSelect @bind-Value="restaurant.State">
+                <option value="">Select State ...</option>
+                <option value="WA">WA</option>
+                <option value="CA">CA</option>
+            </InputSelect>
+        </dd>
+    </dl>
+    <div>your restaurant is @restaurant.Name in @restaurant.City, @restaurant.State</div>
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+
+    private Restaurant restaurant = new Restaurant();
+
+
+    protected override void OnInitialized()
+    {
+        restaurant.Name = "my stake house";
+        restaurant.City = "Bellevue";
+        restaurant.State = "WA";
+    }
+
+    private void HandleValidSubmit()
+    {
+        Debug.WriteLine(restaurant.Name);
+    }
+}
